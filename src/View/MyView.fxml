@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import View.CharacterDisplayer?>
+<?import View.MazeDisplayer?>
+<?import View.SolutionDisplayer?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ComboBox?>
+<BorderPane fx:id="borderpane" onKeyPressed="#KeyPressed" onScroll="#zoomInOut" style="-fx-background-color: #ccddee;              -fx-background-image: url(images/back.jpg);               -fx-background-repeat: no-repeat;                  -fx-background-position: center center;                   -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+    <left>
+    <VBox spacing="5.0">
+        <children>
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="95.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="68.0" prefWidth="100.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <Label text="Maze rows:" style="-fx-font-weight: bold; -fx-font-family: Algerian " GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <Label text="Maze columns:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold; -fx-font-family: Algerian">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="txtfld_rowsNum" disable="false" prefHeight="25.0" prefWidth="81.0" text="20" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="txtfld_columnsNum" disable="false" text="15" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button fx:id="btn_generateMaze" disable="false"  onAction="#generateMaze" prefHeight="25.0" prefWidth="167.0" text="Generate Maze" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                <ToggleButton fx:id="solveB"  disable="true" onAction="#solveMaze" prefHeight="25.0" prefWidth="167.0" text="Solve Maze" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+               <ToggleButton fx:id="music" mnemonicParsing="false" onAction="#stopOrPlay" text="music ON/OFF" GridPane.rowIndex="4" />
+            </GridPane>
+            <Label fx:id="chooseCharacter" style=" -fx-font-weight: bold; -fx-font-family: Algerian" contentDisplay="CENTER" lineSpacing="20.0" maxWidth="1.7976931348623157E308" prefHeight="28.0" prefWidth="208.0" text="Choose Your Character" textAlignment="CENTER" underline="true">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Label>
+            <ChoiceBox fx:id="choiceBox" prefWidth="150.0" value="Jon" onAction="#chooseCharacter">
+                <items>
+                    <FXCollections  fx:factory="observableArrayList">
+                        <String fx:value="Jon" />
+                        <String fx:value="Daenerys" />
+                        <String fx:value="Arya" />
+                        <String fx:value="Drogo" />
+                        <String fx:value="Sansa" />
+                        <String fx:value="Tyrion" />
+                        <String fx:value="Cersei" />
+                    </FXCollections>
+                </items>
+            </ChoiceBox>
+            <Label fx:id="chooseWall" style=" -fx-font-weight: bold; -fx-font-family: Algerian" contentDisplay="CENTER" lineSpacing="20.0" maxWidth="1.7976931348623157E308" prefHeight="28.0" prefWidth="208.0" text="Choose Your Wall" textAlignment="CENTER" underline="true">
+                <font>
+                    <Font size="15.0"/>
+                </font>
+            </Label>
+            <ChoiceBox fx:id="choiceBoxWall" prefWidth="150.0" value="Wall" onAction="#chooseWall">
+                <items>
+                    <FXCollections  fx:factory="observableArrayList">
+                        <String fx:value="Fire" />
+                        <String fx:value="Wall" />
+                        <String fx:value="Ice" />
+                    </FXCollections>
+                </items>
+            </ChoiceBox>
+        </children>
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        </padding>
+    </VBox>
+    </left>
+    <top>
+    <VBox>
+        <children>
+            <MenuBar>
+                <menus>
+                    <Menu mnemonicParsing="false" text="File">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#newOption" text="New" />
+                            <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save" />
+                            <MenuItem mnemonicParsing="false" onAction="#loadGame" text="Load" />
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Options">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#Properties" text="Properties" />
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Help">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#help" text="Help" />
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" onAction="#About" text="About">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#About" text="About" />
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Exit">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#exitP" text="Exit" />
+                        </items>
+                    </Menu>
+                </menus>
+            </MenuBar>
+        </children>
+    </VBox>
+    </top>
+   <center>
+       <Pane fx:id="pane" BorderPane.alignment="CENTER">
+           <children>
+               <MazeDisplayer fx:id="mazeDisplayer" height="630.0" imageFileEnd="resources/images/end.jpeg" imageFileNameWall="resources/images/wall.jpeg" onMouseClicked="#setFocus" width="1000.0" />
+               <SolutionDisplayer fx:id="solutionDisplayer" height="630.0" imageFileEnd="resources/images/end.jpeg" imageFileSolvePath="resources/images/path.jpg" width="1000.0" onMouseClicked="#setFocus" />
+               <CharacterDisplayer fx:id="characterDisplayer" onMouseDragged="#dragMouse" height="630.0" imageFileNameCharacter="resources/images/Jon.jpeg" width="1000.0" onMouseClicked="#setFocus" />
+
+           </children>
+      </Pane>
+   </center>
+
+</BorderPane>
